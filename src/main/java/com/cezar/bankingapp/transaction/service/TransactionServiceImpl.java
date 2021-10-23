@@ -42,8 +42,8 @@ public class TransactionServiceImpl implements TransactionService{
     @Override
     public ResponseEntity<?> transferDetails(TransferDetailsDAO transferDetailsDAO, Long customerNumber) {
         List<Account> accounts = new ArrayList<>();
-        Account fromAccount = null;
-        Account toAccount = null;
+        Account fromAccount;
+        Account toAccount;
 
         Optional<Customer> customerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
 
@@ -85,7 +85,7 @@ public class TransactionServiceImpl implements TransactionService{
                     Transaction toTransaction = bankingServiceHelper.createTransaction(transferDetailsDAO,toAccount.getAccountNumber(),"credit");
                     transactionRepository.save(toTransaction);
                 }
-                return ResponseEntity.status(HttpStatus.OK).body("Amount transfferd for Customer "+customerNumber);
+                return ResponseEntity.status(HttpStatus.OK).body("Amount transfer for Customer "+customerNumber);
             }
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer Number " + customerNumber + " not found.");
@@ -95,6 +95,14 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public List<TransactionDAO> findTransactionByAccountNumber(Long accountNumber) {
-        return null;
+        List<TransactionDAO> transactionList = new ArrayList<>();
+        Optional<Account> accountEntityOptional = accountRepository.findByAccountNumber(accountNumber);
+        if (accountEntityOptional.isPresent()){
+            Optional<List<Transaction>> optionalTransactions = transactionRepository.findByAccountNumber(accountNumber);
+            if (optionalTransactions.isPresent()){
+                optionalTransactions.get().forEach(transaction -> transactionList.add(bankingServiceHelper.convertToTransactionDAO(transaction)));
+            }
+        }
+        return transactionList;
     }
 }
