@@ -30,6 +30,8 @@ public class Customer {
 
     private String lastName;
 
+    private Long customerNumber;
+
     @Email
     private String email;
 
