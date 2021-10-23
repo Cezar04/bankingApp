@@ -10,10 +10,9 @@ import java.util.Date;
 @Setter
 @Builder
 public class TransactionDAO {
+
     private Long accountNumber;
     private Date transactionDateTime;
-
     private Double transactionAmount;
-
     private String transactionType;
 }
