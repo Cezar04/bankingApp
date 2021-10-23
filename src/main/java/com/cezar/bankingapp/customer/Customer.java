@@ -29,7 +29,7 @@ public class Customer {
     private String firstName;
 
     private String lastName;
-
+//customer number poate fi inlocuit cu id
     private Long customerNumber;
 
     @Email
