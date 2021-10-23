@@ -1,5 +1,6 @@
 package com.cezar.bankingapp.customer.service;
 
+import com.cezar.bankingapp.address.Address;
 import com.cezar.bankingapp.customer.Customer;
 import com.cezar.bankingapp.customer.CustomerDAO;
 import com.cezar.bankingapp.customer.CustomerRepository;
@@ -58,12 +59,47 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public CustomerDAO updateCustomer(CustomerDAO customerDAO, Long customerNumber) {
-        return null;
+    public ResponseEntity<?> updateCustomer(CustomerDAO customerDAO, Long customerNumber) {
+        Optional<Customer> managedCustomerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+        Customer unmanagedCustomerEntity = bankingServiceHelper.convertToCostumerEntity(customerDAO);
+
+        if (managedCustomerEntityOptional.isPresent()){
+            Customer mangedCustomerEntity = managedCustomerEntityOptional.get();
+            if (Optional.ofNullable(unmanagedCustomerEntity.getCustomerAddress()).isPresent()){
+                Address managedAddress = mangedCustomerEntity.getCustomerAddress();
+                if (managedAddress!= null){
+                    managedAddress.setAddress(unmanagedCustomerEntity.getCustomerAddress().getAddress());
+                    managedAddress.setCity(unmanagedCustomerEntity.getCustomerAddress().getCity());
+                    managedAddress.setCountry(unmanagedCustomerEntity.getCustomerAddress().getCountry());
+                } else {
+                    mangedCustomerEntity.setCustomerAddress(unmanagedCustomerEntity.getCustomerAddress());
+                }
+        }
+            mangedCustomerEntity.setUpdateDateTime(new Date());
+            mangedCustomerEntity.setFirstName(unmanagedCustomerEntity.getFirstName());
+            mangedCustomerEntity.setLastName(unmanagedCustomerEntity.getLastName());
+            mangedCustomerEntity.setEmail(unmanagedCustomerEntity.getEmail());
+            mangedCustomerEntity.setPhoneNumber(unmanagedCustomerEntity.getPhoneNumber());
+
+            customerRepository.save(mangedCustomerEntity);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Customer updated");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("customer "+ customerNumber+" not fount");
+        }
     }
 
     @Override
-    public CustomerDAO deleteCustomer(Long customerNumber) {
-        return null;
+    public ResponseEntity<?> deleteCustomer(Long customerNumber) {
+
+        Optional<Customer> managedCustomerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+
+        if (managedCustomerEntityOptional.isPresent()){
+            Customer managedCustomerEntity = managedCustomerEntityOptional.get();
+            customerRepository.delete(managedCustomerEntity);
+          return new ResponseEntity<>(managedCustomerEntity, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

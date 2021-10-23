@@ -9,8 +9,8 @@ public interface CustomerService {
     List<CustomerDAO>findAll();
    ResponseEntity<?> addCustomer(CustomerDAO customerDAO);
     CustomerDAO findByCustomerNumber(Long customerNumber);
-    CustomerDAO updateCustomer(CustomerDAO customerDAO,Long customerNumber);
+    ResponseEntity<?> updateCustomer(CustomerDAO customerDAO,Long customerNumber);
 //    aici posibil sa fie o eroare
-    CustomerDAO deleteCustomer(Long customerNumber);
+    ResponseEntity<?> deleteCustomer(Long customerNumber);
 
 }
