@@ -44,6 +44,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public ResponseEntity<?> addCustomer(CustomerDAO customerDAO) {
         Customer customer = bankingServiceHelper.convertToCostumerEntity(customerDAO);
+        customer.setCustomerAddress(customer.getCustomerAddress());
         customer.setCreateDateTime(new Date());
         customerRepository.save(customer);
 
