@@ -1,7 +1,8 @@
 package com.cezar.bankingapp.account.service;
 
-import com.cezar.bankingapp.CustomerAccountReference.CustomerAccountRef;
-import com.cezar.bankingapp.CustomerAccountReference.CustomerAccountRefRepository;
+
+import com.cezar.bankingapp.transaction.CustomerAccountReference.CustomerAccountRef;
+import com.cezar.bankingapp.transaction.CustomerAccountReference.CustomerAccountRefRepository;
 import com.cezar.bankingapp.account.Account;
 import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.AccountRepository;
@@ -20,10 +21,10 @@ import java.util.Optional;
 @Transactional
 public class AccountServiceImpl implements AccountService{
 
-    private final AccountRepository accountRepository;
-    private final BankingServiceHelper bankingServiceHelper;
-    private final CustomerRepository customerRepository;
-    private final CustomerAccountRefRepository accountRefRepository;
+    private  AccountRepository accountRepository;
+    private  BankingServiceHelper bankingServiceHelper;
+    private  CustomerRepository customerRepository;
+    private CustomerAccountRefRepository accountRefRepository;
 
     @Autowired
     public AccountServiceImpl(AccountRepository accountRepository, BankingServiceHelper bankingServiceHelper, CustomerRepository customerRepository, CustomerAccountRefRepository accountRefRepository) {

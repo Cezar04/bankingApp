@@ -1,6 +1,6 @@
 package com.cezar.bankingapp.helper;
 
-import com.cezar.bankingapp.CustomerAccountReference.TransferDetailsDAO;
+import com.cezar.bankingapp.transaction.CustomerAccountReference.TransferDetailsDAO;
 import com.cezar.bankingapp.account.Account;
 import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.address.Address;

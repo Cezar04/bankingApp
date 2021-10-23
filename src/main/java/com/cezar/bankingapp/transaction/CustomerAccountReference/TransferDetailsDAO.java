@@ -1,14 +1,12 @@
-package com.cezar.bankingapp.CustomerAccountReference;
+package com.cezar.bankingapp.transaction.CustomerAccountReference;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class TransferDetailsDAO {
 
     private Long fromAccountNumber;

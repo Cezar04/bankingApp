@@ -1,4 +1,4 @@
-package com.cezar.bankingapp.CustomerAccountReference;
+package com.cezar.bankingapp.transaction.CustomerAccountReference;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
