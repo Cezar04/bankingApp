@@ -19,8 +19,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService{
-    private CustomerRepository customerRepository;
-    private BankingServiceHelper bankingServiceHelper;
+    private final CustomerRepository customerRepository;
+    private final BankingServiceHelper bankingServiceHelper;
 
     @Autowired
     public CustomerServiceImpl(CustomerRepository customerRepository, BankingServiceHelper bankingServiceHelper) {
@@ -36,9 +36,7 @@ public class CustomerServiceImpl implements CustomerService{
         List<CustomerDAO> allCustomers = new ArrayList<>();
         Iterable<Customer> customers = customerRepository.findAll();
 
-        customers.forEach(customer -> {
-            allCustomers.add(bankingServiceHelper.convertToCustomerDAO(customer));
-        });
+        customers.forEach(customer -> allCustomers.add(bankingServiceHelper.convertToCustomerDAO(customer)));
 
         return allCustomers;
     }
@@ -55,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public CustomerDAO findByCustomerNumber(Long customerNumber) {
         Optional<Customer> customerOptional = customerRepository.findByCustomerNumber(customerNumber);
-        return customerOptional.map(customer -> bankingServiceHelper.convertToCustomerDAO(customer)).orElse(null);
+        return customerOptional.map(bankingServiceHelper::convertToCustomerDAO).orElse(null);
     }
 
     @Override
