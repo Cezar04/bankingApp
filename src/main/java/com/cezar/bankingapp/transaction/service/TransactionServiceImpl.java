@@ -1,10 +1,12 @@
 package com.cezar.bankingapp.transaction.service;
 
 import com.cezar.bankingapp.account.Account;
+import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.AccountRepository;
 import com.cezar.bankingapp.customer.Customer;
 import com.cezar.bankingapp.customer.CustomerRepository;
 import com.cezar.bankingapp.helper.BankingServiceHelper;
+import com.cezar.bankingapp.transaction.CustomerAccountReference.OperationOnAccountDAO;
 import com.cezar.bankingapp.transaction.CustomerAccountReference.TransferDetailsDAO;
 import com.cezar.bankingapp.transaction.Transaction;
 import com.cezar.bankingapp.transaction.TransactionDAO;
@@ -105,4 +107,32 @@ public class TransactionServiceImpl implements TransactionService{
         }
         return transactionList;
     }
+
+    @Override
+    public ResponseEntity<?> deposit(OperationOnAccountDAO operationOnAccountDAO, Long customerNumber) {
+        Account account;
+
+        Optional<Customer> customerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+
+        if (customerEntityOptional.isPresent()){
+            Optional<Account> accountOptional = accountRepository.findByAccountNumber(operationOnAccountDAO.getAccountNumber());
+
+            if (accountOptional.isPresent()){
+                account= accountOptional.get();
+            }else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("From Account Number " + operationOnAccountDAO.getAccountNumber()+ " not found.");
+            }
+
+            account.setAccountBalance(account.getAccountBalance()+operationOnAccountDAO.getTransferAmount());
+            account.setUpdateDateTime(new Date());
+
+            accountRepository.save(account);
+
+            Transaction transaction= bankingServiceHelper.updateAccount(operationOnAccountDAO,account.getAccountNumber(),"DEPOSIT");
+            transactionRepository.save(transaction);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Success Operation  for Customer Number " + customerNumber);
+    }
+
+
 }

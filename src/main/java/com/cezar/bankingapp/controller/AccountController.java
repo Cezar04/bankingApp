@@ -2,6 +2,7 @@ package com.cezar.bankingapp.controller;
 
 import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.service.AccountService;
+import com.cezar.bankingapp.transaction.CustomerAccountReference.OperationOnAccountDAO;
 import com.cezar.bankingapp.transaction.CustomerAccountReference.TransferDetailsDAO;
 import com.cezar.bankingapp.transaction.TransactionDAO;
 import com.cezar.bankingapp.transaction.service.TransactionService;
@@ -43,5 +44,10 @@ public class AccountController {
     public List<TransactionDAO> getTransactionByAccountNumber(@PathVariable Long accountNumber) {
 
         return transactionService.findTransactionByAccountNumber(accountNumber);
+    }
+
+    @PostMapping("/add-to-account/{customerNumber}")
+    public ResponseEntity<?> depositToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable Long customerNumber){
+        return  transactionService.addToAccount(operationOnAccountDAO,customerNumber);
     }
 }
