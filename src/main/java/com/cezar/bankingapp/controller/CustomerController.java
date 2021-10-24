@@ -31,7 +31,7 @@ public class CustomerController {
         return customerService.addCustomer(customer);
     }
 
-    @GetMapping("/{customerNumber")
+    @GetMapping("/{customerNumber}")
     public CustomerDAO getCustomer(@PathVariable Long customerNumber){
         return customerService.findByCustomerNumber(customerNumber);
     }

@@ -2,10 +2,14 @@ package com.cezar.bankingapp.controller;
 
 import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.service.AccountService;
+import com.cezar.bankingapp.transaction.CustomerAccountReference.TransferDetailsDAO;
+import com.cezar.bankingapp.transaction.TransactionDAO;
 import com.cezar.bankingapp.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
@@ -28,5 +32,16 @@ public class AccountController {
     @GetMapping("/{accountNumber}")
     public ResponseEntity<?> getByAccountNumber(@PathVariable Long accountNumber){
         return accountService.findByAccountNumber(accountNumber);
+    }
+
+    @PutMapping("/transfer/{customerNumber}")
+    public ResponseEntity<?> transferDetails(@RequestBody TransferDetailsDAO transferDetailsDAO,@PathVariable Long customerNumber){
+        return transactionService.transferDetails(transferDetailsDAO,customerNumber);
+    }
+
+    @GetMapping(path = "/transactions/{accountNumber}")
+    public List<TransactionDAO> getTransactionByAccountNumber(@PathVariable Long accountNumber) {
+
+        return transactionService.findTransactionByAccountNumber(accountNumber);
     }
 }
