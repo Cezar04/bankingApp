@@ -24,4 +24,9 @@ public class AccountController {
     public ResponseEntity<?> addNewAccount(@RequestBody AccountDAO accountDAO, @PathVariable Long customerNumber){
         return accountService.addNewAccount(accountDAO,customerNumber);
     }
+
+    @GetMapping("/{accountNumber}")
+    public ResponseEntity<?> getByAccountNumber(@PathVariable Long accountNumber){
+        return accountService.findByAccountNumber(accountNumber);
+    }
 }
