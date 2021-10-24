@@ -36,6 +36,16 @@ public class CustomerController {
         return customerService.findByCustomerNumber(customerNumber);
     }
 
+    @PutMapping("/edit/{customerNumber}")
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomerDAO customerDAO,@PathVariable Long customerNumber){
+        return customerService.updateCustomer(customerDAO,customerNumber);
+    }
+
+    @DeleteMapping("/delete/{customerNumber}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long customerNumber){
+        return customerService.deleteCustomer(customerNumber);
+    }
+
 
 
 
