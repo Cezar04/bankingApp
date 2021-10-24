@@ -30,6 +30,8 @@ public class BankingServiceHelper {
         return Customer.builder()
                 .firstName(customerDAO.getFirstName())
                 .lastName(customerDAO.getLastName())
+                .email(customerDAO.getEmail())
+                .phoneNumber(customerDAO.getPhoneNumber())
                 .customerNumber(customerDAO.getCustomerNumber())
                 .customerAddress(convertAddressToEntity(customerDAO.getAddress()))
                 .build();
