@@ -134,5 +134,36 @@ public class TransactionServiceImpl implements TransactionService{
         return ResponseEntity.status(HttpStatus.OK).body("Success Operation  for Customer Number " + customerNumber);
     }
 
+    @Override
+    public ResponseEntity<?> withdraw(OperationOnAccountDAO operationOnAccountDAO, Long customerNumber) {
+        Account account;
+
+        Optional<Customer> customerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+
+        if (customerEntityOptional.isPresent()){
+            Optional<Account> accountOptional = accountRepository.findByAccountNumber(operationOnAccountDAO.getAccountNumber());
+
+            if (accountOptional.isPresent()){
+                account= accountOptional.get();
+            }else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("From Account Number " + operationOnAccountDAO.getAccountNumber()+ " not found.");
+            }
+            if (account.getAccountBalance()< operationOnAccountDAO.getTransferAmount()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Insufficient Funds.");
+            }else{
+                account.setAccountBalance(account.getAccountBalance() - operationOnAccountDAO.getTransferAmount());
+                account.setUpdateDateTime(new Date());
+
+                accountRepository.save(account);
+
+                Transaction transaction= bankingServiceHelper.updateAccount(operationOnAccountDAO,account.getAccountNumber(),"DEPOSIT");
+                transactionRepository.save(transaction);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body("Success Operation  for Customer Number " + customerNumber);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer Number " + customerNumber + " not found.");
+        }
+    }
+
 
 }

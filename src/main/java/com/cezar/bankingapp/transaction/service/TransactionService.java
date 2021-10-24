@@ -11,4 +11,5 @@ public interface TransactionService {
     ResponseEntity<?>transferDetails(TransferDetailsDAO transferDetailsDAO,Long customerNumber);
     List<TransactionDAO> findTransactionByAccountNumber(Long accountNumber);
     ResponseEntity<?>deposit(OperationOnAccountDAO operationOnAccountDAO, Long customerNumber);
+    ResponseEntity<?>withdraw(OperationOnAccountDAO operationOnAccountDAO, Long customerNumber);
 }

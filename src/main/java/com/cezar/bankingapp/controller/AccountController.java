@@ -46,8 +46,12 @@ public class AccountController {
         return transactionService.findTransactionByAccountNumber(accountNumber);
     }
 
-    @PostMapping("/add-to-account/{customerNumber}")
+    @PostMapping("/deposit-to-account/{customerNumber}")
     public ResponseEntity<?> depositToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable Long customerNumber){
-        return  transactionService.addToAccount(operationOnAccountDAO,customerNumber);
+        return  transactionService.deposit(operationOnAccountDAO,customerNumber);
+    }
+    @PostMapping("/withdraw-to-account/{customerNumber}")
+    public ResponseEntity<?> withdrawToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable Long customerNumber){
+        return  transactionService.withdraw(operationOnAccountDAO,customerNumber);
     }
 }
