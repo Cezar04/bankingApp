@@ -25,6 +25,7 @@ public class Account {
     private Long accountNumber;
 
     private Double accountBalance;
+
     @Temporal(TemporalType.TIME)
     private Date createDateTime;
 

@@ -5,16 +5,14 @@ import com.cezar.bankingapp.customer.Customer;
 import com.cezar.bankingapp.customer.CustomerDAO;
 import com.cezar.bankingapp.customer.CustomerRepository;
 import com.cezar.bankingapp.helper.BankingServiceHelper;
+import com.cezar.bankingapp.transaction.CustomerAccountReference.OperationOnAccountDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -47,19 +45,19 @@ public class CustomerServiceImpl implements CustomerService{
         customer.setCustomerAddress(customer.getCustomerAddress());
         customer.setCreateDateTime(new Date());
         customerRepository.save(customer);
-
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @Override
-    public CustomerDAO findByCustomerNumber(Long customerNumber) {
-        Optional<Customer> customerOptional = customerRepository.findByCustomerNumber(customerNumber);
+    public CustomerDAO findByCustomerId(UUID customerId) {
+
+        Optional<Customer> customerOptional = customerRepository.findById(customerId);
         return customerOptional.map(bankingServiceHelper::convertToCustomerDAO).orElse(null);
     }
 
     @Override
-    public ResponseEntity<?> updateCustomer(CustomerDAO customerDAO, Long customerNumber) {
-        Optional<Customer> managedCustomerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+    public ResponseEntity<?> updateCustomerTest(CustomerDAO customerDAO, UUID customerId) {
+        Optional<Customer> managedCustomerEntityOptional = customerRepository.findById(customerId);
         Customer unmanagedCustomerEntity = bankingServiceHelper.convertToCostumerEntity(customerDAO);
 
         if (managedCustomerEntityOptional.isPresent()){
@@ -79,19 +77,19 @@ public class CustomerServiceImpl implements CustomerService{
             mangedCustomerEntity.setLastName(unmanagedCustomerEntity.getLastName());
             mangedCustomerEntity.setEmail(unmanagedCustomerEntity.getEmail());
             mangedCustomerEntity.setPhoneNumber(unmanagedCustomerEntity.getPhoneNumber());
-
             customerRepository.save(mangedCustomerEntity);
+
 
             return ResponseEntity.status(HttpStatus.OK).body("Customer updated");
         }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("customer "+ customerNumber+" not fount");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("customer "+ customerId+" not fount");
         }
     }
 
     @Override
-    public ResponseEntity<?> deleteCustomer(Long customerNumber) {
+    public ResponseEntity<?> deleteCustomer(UUID customerId) {
 
-        Optional<Customer> managedCustomerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+        Optional<Customer> managedCustomerEntityOptional = customerRepository.findById(customerId);
 
         if (managedCustomerEntityOptional.isPresent()){
             Customer managedCustomerEntity = managedCustomerEntityOptional.get();

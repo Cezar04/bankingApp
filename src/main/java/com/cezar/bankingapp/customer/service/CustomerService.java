@@ -4,13 +4,14 @@ import com.cezar.bankingapp.customer.CustomerDAO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CustomerService {
     List<CustomerDAO>findAll();
    ResponseEntity<?> addCustomer(CustomerDAO customerDAO);
-    CustomerDAO findByCustomerNumber(Long customerNumber);
-    ResponseEntity<?> updateCustomer(CustomerDAO customerDAO,Long customerNumber);
-//    aici posibil sa fie o eroare
-    ResponseEntity<?> deleteCustomer(Long customerNumber);
+//    CustomerDAO findByCustomerNumber(Long customerNumber);
+    CustomerDAO findByCustomerId(UUID customerId);
+    ResponseEntity<?> updateCustomerTest(CustomerDAO customerDAO,UUID customerID);
+    ResponseEntity<?> deleteCustomer(UUID customerId);
 
 }

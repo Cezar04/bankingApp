@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/customer")
@@ -31,19 +32,20 @@ public class CustomerController {
         return customerService.addCustomer(customer);
     }
 
-    @GetMapping("/{customerNumber}")
-    public CustomerDAO getCustomer(@PathVariable Long customerNumber){
-        return customerService.findByCustomerNumber(customerNumber);
+    @GetMapping("/{customerId}")
+    public CustomerDAO getCustomer(@PathVariable UUID customerId){
+        return customerService.findByCustomerId(customerId);
     }
 
-    @PutMapping("/edit/{customerNumber}")
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomerDAO customerDAO,@PathVariable Long customerNumber){
-        return customerService.updateCustomer(customerDAO,customerNumber);
+
+    @PutMapping("/edit/{customerId}")
+    public ResponseEntity<?> updateCustomerTest(@RequestBody CustomerDAO customerDAO,@PathVariable UUID customerId){
+        return customerService.updateCustomerTest(customerDAO,customerId);
     }
 
-    @DeleteMapping("/delete/{customerNumber}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable Long customerNumber){
-        return customerService.deleteCustomer(customerNumber);
+    @DeleteMapping("/delete/{customerId}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable UUID customerId){
+        return customerService.deleteCustomer(customerId);
     }
 
 
