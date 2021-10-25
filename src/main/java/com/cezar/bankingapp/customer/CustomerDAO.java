@@ -15,8 +15,6 @@ public class CustomerDAO {
 
     private String lastName;
 
-    private Long customerNumber;
-
     @Email
     private String email;
 

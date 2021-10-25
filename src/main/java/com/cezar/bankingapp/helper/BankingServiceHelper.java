@@ -22,7 +22,6 @@ public class BankingServiceHelper {
                 .lastName(customer.getLastName())
                 .email(customer.getEmail())
                 .phoneNumber(customer.getPhoneNumber())
-                .customerNumber(customer.getCustomerNumber())
                 .address(convertAddressToAddressDAO(customer.getCustomerAddress()))
                 .build();
     }
@@ -33,7 +32,6 @@ public class BankingServiceHelper {
                 .lastName(customerDAO.getLastName())
                 .email(customerDAO.getEmail())
                 .phoneNumber(customerDAO.getPhoneNumber())
-                .customerNumber(customerDAO.getCustomerNumber())
                 .customerAddress(convertAddressToEntity(customerDAO.getAddress()))
                 .build();
     }

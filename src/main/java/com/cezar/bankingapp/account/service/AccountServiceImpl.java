@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -35,15 +36,15 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public ResponseEntity<?> addNewAccount(AccountDAO accountDAO, Long customerNumber) {
-        Optional<Customer> customerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
+    public ResponseEntity<?> addNewAccount(AccountDAO accountDAO, UUID customerId) {
+        Optional<Customer> customerEntityOptional = customerRepository.findById(customerId);
 
         if (customerEntityOptional.isPresent()){
             accountRepository.save(bankingServiceHelper.convertToAccountEntity(accountDAO));
 
             accountRefRepository.save(CustomerAccountRef.builder()
                     .accountNumber(accountDAO.getAccountNumber())
-                    .customerNumber(customerNumber)
+                    .customerNumber(customerId)
                     .build());
 
         }

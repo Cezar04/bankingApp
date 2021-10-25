@@ -22,5 +22,5 @@ public class CustomerAccountRef {
     private UUID id;
 
     private Long accountNumber;
-    private Long customerNumber;
+    private UUID customerNumber;
 }

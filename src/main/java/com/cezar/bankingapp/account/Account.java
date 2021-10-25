@@ -23,7 +23,6 @@ public class Account {
     private UUID id;
 
     private Long accountNumber;
-
     private Double accountBalance;
 
     @Temporal(TemporalType.TIME)

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/accounts")
@@ -25,9 +26,9 @@ public class AccountController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/add-account/{customerNumber}")
-    public ResponseEntity<?> addNewAccount(@RequestBody AccountDAO accountDAO, @PathVariable Long customerNumber){
-        return accountService.addNewAccount(accountDAO,customerNumber);
+    @PostMapping("/add-account/{customerId}")
+    public ResponseEntity<?> addNewAccount(@RequestBody AccountDAO accountDAO, @PathVariable UUID customerId){
+        return accountService.addNewAccount(accountDAO,customerId);
     }
 
     @GetMapping("/{accountNumber}")
@@ -35,9 +36,9 @@ public class AccountController {
         return accountService.findByAccountNumber(accountNumber);
     }
 
-    @PutMapping("/transfer/{customerNumber}")
-    public ResponseEntity<?> transferDetails(@RequestBody TransferDetailsDAO transferDetailsDAO,@PathVariable Long customerNumber){
-        return transactionService.transferDetails(transferDetailsDAO,customerNumber);
+    @PutMapping("/transfer/{customerId}")
+    public ResponseEntity<?> transferDetails(@RequestBody TransferDetailsDAO transferDetailsDAO,@PathVariable UUID customerId){
+        return transactionService.transferDetails(transferDetailsDAO,customerId);
     }
 
     @GetMapping(path = "/transactions/{accountNumber}")
@@ -46,13 +47,13 @@ public class AccountController {
         return transactionService.findTransactionByAccountNumber(accountNumber);
     }
 
-    @PostMapping("/deposit-to-account/{customerNumber}")
-    public ResponseEntity<?> depositToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable Long customerNumber){
-        return  transactionService.deposit(operationOnAccountDAO,customerNumber);
+    @PostMapping("/deposit-to-account/{customerId}")
+    public ResponseEntity<?> depositToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable UUID customerId){
+        return  transactionService.deposit(operationOnAccountDAO,customerId);
     }
 
-    @PostMapping("/withdraw-to-account/{customerNumber}")
-    public ResponseEntity<?> withdrawToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable Long customerNumber){
-        return  transactionService.withdraw(operationOnAccountDAO,customerNumber);
+    @PostMapping("/withdraw-to-account/{customerId}")
+    public ResponseEntity<?> withdrawToAccount(@RequestBody OperationOnAccountDAO operationOnAccountDAO, @PathVariable UUID customerId){
+        return  transactionService.withdraw(operationOnAccountDAO,customerId);
     }
 }
