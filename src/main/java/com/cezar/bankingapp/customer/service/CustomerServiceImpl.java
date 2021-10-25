@@ -5,7 +5,6 @@ import com.cezar.bankingapp.customer.Customer;
 import com.cezar.bankingapp.customer.CustomerDAO;
 import com.cezar.bankingapp.customer.CustomerRepository;
 import com.cezar.bankingapp.helper.BankingServiceHelper;
-import com.cezar.bankingapp.transaction.CustomerAccountReference.OperationOnAccountDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

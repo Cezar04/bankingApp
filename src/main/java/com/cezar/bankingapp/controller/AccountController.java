@@ -2,8 +2,8 @@ package com.cezar.bankingapp.controller;
 
 import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.service.AccountService;
-import com.cezar.bankingapp.transaction.CustomerAccountReference.OperationOnAccountDAO;
-import com.cezar.bankingapp.transaction.CustomerAccountReference.TransferDetailsDAO;
+import com.cezar.bankingapp.transaction.OperationOnAccountDAO;
+import com.cezar.bankingapp.transaction.TransferDetailsDAO;
 import com.cezar.bankingapp.transaction.TransactionDAO;
 import com.cezar.bankingapp.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;

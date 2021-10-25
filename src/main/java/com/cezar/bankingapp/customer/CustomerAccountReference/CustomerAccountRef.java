@@ -1,4 +1,4 @@
-package com.cezar.bankingapp.transaction.CustomerAccountReference;
+package com.cezar.bankingapp.customer.CustomerAccountReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

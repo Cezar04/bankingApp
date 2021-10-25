@@ -1,4 +1,4 @@
-package com.cezar.bankingapp.transaction.CustomerAccountReference;
+package com.cezar.bankingapp.transaction;
 
 import lombok.*;
 

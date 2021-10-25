@@ -1,13 +1,12 @@
 package com.cezar.bankingapp.transaction.service;
 
 import com.cezar.bankingapp.account.Account;
-import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.AccountRepository;
 import com.cezar.bankingapp.customer.Customer;
 import com.cezar.bankingapp.customer.CustomerRepository;
 import com.cezar.bankingapp.helper.BankingServiceHelper;
-import com.cezar.bankingapp.transaction.CustomerAccountReference.OperationOnAccountDAO;
-import com.cezar.bankingapp.transaction.CustomerAccountReference.TransferDetailsDAO;
+import com.cezar.bankingapp.transaction.OperationOnAccountDAO;
+import com.cezar.bankingapp.transaction.TransferDetailsDAO;
 import com.cezar.bankingapp.transaction.Transaction;
 import com.cezar.bankingapp.transaction.TransactionDAO;
 import com.cezar.bankingapp.transaction.TransactionRepository;
@@ -36,61 +35,6 @@ public class TransactionServiceImpl implements TransactionService{
         this.transactionRepository = transactionRepository;
     }
 
-
-
-//    @Override
-//    public ResponseEntity<?> transferDetails(TransferDetailsDAO transferDetailsDAO, Long customerNumber) {
-//        List<Account> accounts = new ArrayList<>();
-//        Account fromAccount;
-//        Account toAccount;
-//
-//        Optional<Customer> customerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
-//
-//        if (customerEntityOptional.isPresent()){
-//            // get FROM ACCOUNT info
-//            Optional<Account> fromAccountEntityOptional = accountRepository.findByAccountNumber(transferDetailsDAO.getFromAccountNumber());
-//            if (fromAccountEntityOptional.isPresent()){
-//                fromAccount = fromAccountEntityOptional.get();
-//            }else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("account number "+ transferDetailsDAO.getFromAccountNumber()+" not found.");
-//            }
-//
-//            // get TO ACCOUNT info
-//            Optional<Account> toAccountEntityOptional = accountRepository.findByAccountNumber(transferDetailsDAO.getToAccountNumber());
-//            if (toAccountEntityOptional.isPresent()){
-//                toAccount = toAccountEntityOptional.get();
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("account number "+ transferDetailsDAO.getToAccountNumber()+" not found.");
-//            }
-//
-//            //insufficient funds
-//            if (fromAccount.getAccountBalance()<transferDetailsDAO.getTransferAmount()){
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Insufficient funds!");
-//            } else{
-//                synchronized (this){
-//                    fromAccount.setAccountBalance(fromAccount.getAccountBalance()-transferDetailsDAO.getTransferAmount());
-//                    fromAccount.setUpdateDateTime(new Date());
-//                    accounts.add(fromAccount);
-//
-//                    toAccount.setAccountBalance(toAccount.getAccountBalance()+transferDetailsDAO.getTransferAmount());
-//                    toAccount.setUpdateDateTime(new Date());
-//                    accounts.add(toAccount);
-//
-//                    accountRepository.saveAll(accounts);
-//
-//                    Transaction fromTransaction = bankingServiceHelper.createTransaction(transferDetailsDAO,fromAccount.getAccountNumber(),"Debit");
-//                    transactionRepository.save(fromTransaction);
-//
-//                    Transaction toTransaction = bankingServiceHelper.createTransaction(transferDetailsDAO,toAccount.getAccountNumber(),"credit");
-//                    transactionRepository.save(toTransaction);
-//                }
-//                return ResponseEntity.status(HttpStatus.OK).body("Amount transfer for Customer "+customerNumber);
-//            }
-//        }else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer Number " + customerNumber + " not found.");
-//        }
-//
-//    }
 
     @Override
     public ResponseEntity<?> transferDetails(TransferDetailsDAO transferDetailsDAO, UUID customerId) {
@@ -158,32 +102,6 @@ public class TransactionServiceImpl implements TransactionService{
         }
         return transactionList;
     }
-
-//    @Override
-//    public ResponseEntity<?> deposit(OperationOnAccountDAO operationOnAccountDAO, Long customerNumber) {
-//        Account account;
-//
-//        Optional<Customer> customerEntityOptional = customerRepository.findByCustomerNumber(customerNumber);
-//
-//        if (customerEntityOptional.isPresent()){
-//            Optional<Account> accountOptional = accountRepository.findByAccountNumber(operationOnAccountDAO.getAccountNumber());
-//
-//            if (accountOptional.isPresent()){
-//                account= accountOptional.get();
-//            }else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("From Account Number " + operationOnAccountDAO.getAccountNumber()+ " not found.");
-//            }
-//
-//            account.setAccountBalance(account.getAccountBalance()+operationOnAccountDAO.getTransferAmount());
-//            account.setUpdateDateTime(new Date());
-//
-//            accountRepository.save(account);
-//
-//            Transaction transaction= bankingServiceHelper.updateAccount(operationOnAccountDAO,account.getAccountNumber(),"DEPOSIT");
-//            transactionRepository.save(transaction);
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body("Success Operation  for Customer Number " + customerNumber);
-//    }
 
     @Override
     public ResponseEntity<?> deposit(OperationOnAccountDAO operationOnAccountDAO, UUID customerId) {

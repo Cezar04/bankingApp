@@ -1,8 +1,8 @@
 package com.cezar.bankingapp.account.service;
 
 
-import com.cezar.bankingapp.transaction.CustomerAccountReference.CustomerAccountRef;
-import com.cezar.bankingapp.transaction.CustomerAccountReference.CustomerAccountRefRepository;
+import com.cezar.bankingapp.customer.CustomerAccountReference.CustomerAccountRef;
+import com.cezar.bankingapp.customer.CustomerAccountReference.CustomerAccountRefRepository;
 import com.cezar.bankingapp.account.Account;
 import com.cezar.bankingapp.account.AccountDAO;
 import com.cezar.bankingapp.account.AccountRepository;
